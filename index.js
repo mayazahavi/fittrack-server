@@ -2,7 +2,6 @@ const dotenv = require("dotenv");
 const path = require("path");
 require("dotenv").config();
 
-
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
@@ -34,8 +33,22 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-// 🔧 Middleware
-app.use(cors());
+// 🔧 Middleware כולל CORS עם דומיינים מותרים
+const allowedOrigins = [
+  "https://fittrack-client-cxnu.onrender.com",
+  "http://localhost:5500"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
+}));
+
 app.use(express.json());
 app.use(express.static("client"));
 
@@ -43,8 +56,6 @@ app.use(express.static("client"));
 app.use("/api/users", userRoutes);
 app.use("/api/entries", verifyToken, entryRoutes);
 app.use("/api/coach/feedback", verifyToken, feedbackRoutes);
-
-// ✅ כל הראוטים של trainee profile מוגנים בטוקן
 app.use("/api/trainee/profile", verifyToken, traineeProfileRoutes);
 
 // 🚀 Start server
