@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const FeedbackSchema = new mongoose.Schema({
   trainee: {
     type: mongoose.Schema.Types.ObjectId,
@@ -25,5 +24,4 @@ const FeedbackSchema = new mongoose.Schema({
     default: false
   }
 }, { timestamps: true });
-
 module.exports = mongoose.model("Feedback", FeedbackSchema);

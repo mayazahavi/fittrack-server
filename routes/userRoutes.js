@@ -3,8 +3,6 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { registerUser, loginUser } = require("../controllers/userController");
 const User = require("../models/User");
-
-// Middleware לאימות טוקן
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -19,12 +17,8 @@ const verifyToken = (req, res, next) => {
     return res.status(403).json({ error: "Invalid or expired token" });
   }
 };
-
-// הרשמה והתחברות
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-
-// שליפת רשימת מתאמנים (Coach בלבד)
 router.get("/trainees", verifyToken, async (req, res) => {
   try {
     if (req.user.role !== "coach") {
@@ -36,10 +30,7 @@ router.get("/trainees", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Failed to fetch trainees" });
   }
 });
-
-// ✅ שליפת תפקידי משתמשים לרישום
 router.get("/roles", (req, res) => {
   res.json(["trainee", "coach"]);
 });
-
 module.exports = router;

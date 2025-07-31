@@ -1,7 +1,5 @@
 const Profile = require("../models/Profile");
 const User = require("../models/User");
-
-// 📥 קבלת פרופיל מתאמן לפי שם משתמש
 exports.getProfile = async (req, res) => {
   try {
     const { username } = req.params;
@@ -10,27 +8,20 @@ exports.getProfile = async (req, res) => {
     if (!user) return res.status(404).json({ error: "User not found" });
 
     const profile = await Profile.findOne({ user: user._id });
-
-    // במקום שגיאה – מחזירים null אם אין פרופיל
     if (!profile) {
       return res.status(200).json({ trainee: null });
     }
-
     res.status(200).json({ trainee: profile });
   } catch (err) {
     console.error("Error in getProfile:", err);
     res.status(500).json({ error: "Server error" });
   }
 };
-
-// 📝 עדכון פרופיל או יצירה אם לא קיים
 exports.updateProfile = async (req, res) => {
   try {
     const userId = req.user.id;
     const { age, gender, height, weight } = req.body;
-
     let profile = await Profile.findOne({ user: userId });
-
     if (!profile) {
       profile = new Profile({
         user: userId,
@@ -45,7 +36,6 @@ exports.updateProfile = async (req, res) => {
       profile.height = height;
       profile.weightHistory.push({ weight, date: new Date() });
     }
-
     await profile.save();
     res.status(200).json({ message: "Profile saved", profile });
   } catch (err) {
@@ -53,8 +43,6 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({ error: "Failed to save profile" });
   }
 };
-
-// ✅ שליפת רשימת מגדרים באופן דינמי
 exports.getGenders = (req, res) => {
   try {
     const genders = ["male", "female", "other"];

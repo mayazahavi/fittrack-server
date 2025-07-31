@@ -4,10 +4,10 @@ const verifyToken = require("../middleware/auth");
 const {
   getProfile,
   updateProfile,
-  getGenders // נוסיף פונקציה חדשה
+  getGenders 
 } = require("../controllers/profileController");
 
-router.get("/genders", verifyToken, getGenders); // ✅ נוספה תמיכה בהשלמת מגדרים
+router.get("/genders", verifyToken, getGenders); 
 router.get("/:username", verifyToken, getProfile);
 router.post("/", verifyToken, updateProfile);
 

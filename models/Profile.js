@@ -31,5 +31,4 @@ const profileSchema = new mongoose.Schema({
   },
   weightHistory: [weightEntrySchema], 
 });
-
 module.exports = mongoose.model("Profile", profileSchema);

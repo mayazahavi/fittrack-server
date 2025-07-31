@@ -1,16 +1,15 @@
 const mongoose = require("mongoose");
-
 const entrySchema = new mongoose.Schema({
   meals: [
     {
-      name: String,       // שם המאכל
-      amount: Number,     // כמות (למשל 100)
-      unit: String,       // יחידה (למשל grams)
-      calories: Number,   // ערך קלורי
+      name: String,       
+      amount: Number,     
+      unit: String,       
+      calories: Number,   
     },
   ],
-  calories: Number,       // סך כל הקלוריות
-  workout: String,        // סוג אימון
+  calories: Number,      
+  workout: String,        
   date: String,
   time: String,
   user: {
@@ -19,5 +18,4 @@ const entrySchema = new mongoose.Schema({
     required: true,
   },
 });
-
 module.exports = mongoose.model("Entry", entrySchema);

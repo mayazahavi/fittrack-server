@@ -1,21 +1,16 @@
-# 📦 תיקיות שנוצרות אוטומטית
 node_modules/
 .vscode/
 .idea/
 
-# 🔒 קובץ סביבה פרטי
 .env
 
-# 🪲 קבצי לוגים זמניים
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 *.log
 *.tmp
 
-# 🍎 קבצים ספציפיים למערכות הפעלה
 .DS_Store
 Thumbs.db
 
-# 📬 קבצי Postman
 *.postman_collection.json
