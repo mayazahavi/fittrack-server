@@ -36,7 +36,8 @@ const verifyToken = (req, res, next) => {
 // 🔧 Middleware כולל CORS עם דומיינים מותרים
 const allowedOrigins = [
   "https://fittrack-client-cxnu.onrender.com",
-  "http://localhost:5500"
+  "http://localhost:5500", // לא חובה, אבל אפשר להשאיר לפיתוח
+  "http://127.0.0.1:5500"  // ✅ זה מה שמאפשר ל־Live Server לעבוד
 ];
 
 app.use(cors({
