@@ -6,12 +6,17 @@ exports.getProfile = async (req, res) => {
   try {
     const { username } = req.params;
     const user = await User.findOne({ username });
+
     if (!user) return res.status(404).json({ error: "User not found" });
 
     const profile = await Profile.findOne({ user: user._id });
-    if (!profile) return res.status(404).json({ error: "Profile not found" });
 
-    res.json({ trainee: profile });
+    // במקום שגיאה – מחזירים null אם אין פרופיל
+    if (!profile) {
+      return res.status(200).json({ trainee: null });
+    }
+
+    res.status(200).json({ trainee: profile });
   } catch (err) {
     console.error("Error in getProfile:", err);
     res.status(500).json({ error: "Server error" });
@@ -25,6 +30,7 @@ exports.updateProfile = async (req, res) => {
     const { age, gender, height, weight } = req.body;
 
     let profile = await Profile.findOne({ user: userId });
+
     if (!profile) {
       profile = new Profile({
         user: userId,
